@@ -116,10 +116,11 @@ namespace Xapian {
 class MSetItem {
  public:
   double weight;
-  Xapian::docid id; 
-  MSetItem(){};
-  ~MSetItem(){};
-  MSetItem(long x, Xapian::docid y){weight=x;id=y;}
+  Xapian::docid id;
+ 
+MSetItem(){};
+~MSetItem(){};
+MSetItem(long x, Xapian::docid y){weight=x;id=y;}
 };
 
 }

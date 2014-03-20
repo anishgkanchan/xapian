@@ -1,0 +1,118 @@
+diff --git a/xapian-bindings/java/docs/examples/SimpleIndex.java b/xapian-bindings/java/docs/examples/SimpleIndex.java
+index b5aade7..8e12f36 100644
+--- a/xapian-bindings/java/docs/examples/SimpleIndex.java
++++ b/xapian-bindings/java/docs/examples/SimpleIndex.java
+@@ -29,12 +29,14 @@ package org.xapian.examples;
+ import org.xapian.Document;
+ import org.xapian.WritableDatabase;
+ import org.xapian.Xapian;
+-
++import org.xapian.TermGenerator;
+ public class SimpleIndex {
+ 
+ 
+     public static void main(String[] args) throws Exception {
+-        // ensure we have enough args
++        
++
++// ensure we have enough args
+         if (args.length < 2) {
+             usage();
+             System.exit(0);
+@@ -44,6 +46,14 @@ public class SimpleIndex {
+         String dbpath = args[0];
+         WritableDatabase db = new WritableDatabase(dbpath, Xapian.DB_CREATE_OR_OVERWRITE);
+ 
++
++	//testing block starts
++
++TermGenerator termGenerator = new TermGenerator();
++termGenerator.setDatabase(db);
++termGenerator.setFlags(TermGenerator.flags.FLAG_SPELLING);
++	//testing block ends
++
+         // walk through remaining command-line arguments and
+         // add each argument as a single to term to a new document.
+         for (int x = 1; x < args.length; x++) {
+diff --git a/xapian-bindings/java/docs/examples/SimpleSearch.java b/xapian-bindings/java/docs/examples/SimpleSearch.java
+index 0f81702..de15319 100644
+--- a/xapian-bindings/java/docs/examples/SimpleSearch.java
++++ b/xapian-bindings/java/docs/examples/SimpleSearch.java
+@@ -24,7 +24,7 @@
+  THE POSSIBILITY OF SUCH DAMAGE.
+  **/
+ package org.xapian.examples;
+-
++//import java.util.*;
+ import org.xapian.*;
+ 
+ public class SimpleSearch {
+@@ -52,14 +52,17 @@ public class SimpleSearch {
+         Enquire enquire = new Enquire(db);
+         enquire.setQuery(query);
+         MSet matches = enquire.getMSet(0, 2500);    // get up to 2500 matching documents
+-        MSetIterator itr = matches.iterator();
+-
++//iterator
++        MSetIterator itr = matches.begin();
+         System.err.println("Found " + matches.size() + " matching documents using " + query);
+         while (itr.hasNext()) {
+-            itr = (MSetIterator) itr.next(); // TODO:  Make this more like a Java Iterator
++
++
++          //  itr = (MSetIterator) 
++itr.next(); // TODO:  Make this more like a Java Iterator
+             // by returning some kind of "MatchDescriptor" object
+             Document doc = itr.getDocument();
+-            System.err.println(itr.getPercent() + "% [" + itr.getDocumentId() + "] " + doc.getValue(0));
++        //   System.err.println(itr.getPercent() + "% [" + itr.getDocumentId() + "] " + doc.getValue(0));
+         }
+     }
+ 
+diff --git a/xapian-bindings/java/java.i b/xapian-bindings/java/java.i
+index 1e0bc1d..b1d3d8a 100644
+--- a/xapian-bindings/java/java.i
++++ b/xapian-bindings/java/java.i
+@@ -101,6 +101,8 @@ class Version {
+ }
+ 
+ namespace Xapian {
++%include "enumtypeunsafe.swg"
++%javaconst(1) TermGenerator::flags;
+ 
+ %ignore version_string;
+ %ignore major_version;
+@@ -140,6 +142,7 @@ namespace Xapian {
+     bool hasNext() const { return (*self) != Xapian::TermIterator(); }
+ }
+ 
++
+ %extend ValueIterator {
+     std::string next () {
+         std:string tmp;
+diff --git a/xapian-core/examples/simplesearch.cc b/xapian-core/examples/simplesearch.cc
+index defd7e7..17d88bf 100644
+--- a/xapian-core/examples/simplesearch.cc
++++ b/xapian-core/examples/simplesearch.cc
+@@ -81,7 +81,7 @@ try {
+     // Display the results.
+     cout << matches.get_matches_estimated() << " results found.\n";
+     cout << "Matches 1-" << matches.size() << ":\n" << endl;
+-
++/
+     for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i) {
+ 	cout << i.get_rank() + 1 << ": " << i.get_weight() << " docid=" << *i
+ 	     << " [" << i.get_document().get_data() << "]\n\n";
+diff --git a/xapian-core/include/xapian/enquire.h b/xapian-core/include/xapian/enquire.h
+index 6548912..a02c649 100644
+--- a/xapian-core/include/xapian/enquire.h
++++ b/xapian-core/include/xapian/enquire.h
+@@ -160,7 +160,7 @@ class XAPIAN_VISIBILITY_DEFAULT MSet {
+ 	 *  display such information.  However, our experience is that
+ 	 *  presenting this value to users causes them to worry about the
+ 	 *  large number of results, rather than how useful those at the top
+-	 *  of the result set are, and is thus undesirable.
++	 *  of the result  are, and is thus undesirable.
+ 	 */
+ 	Xapian::doccount get_matches_estimated() const;
+ 

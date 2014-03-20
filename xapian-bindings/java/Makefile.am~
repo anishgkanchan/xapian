@@ -60,7 +60,6 @@ XAPIAN_SWIG_JAVA_SRCS=\
 	org/xapian/MatchDecider.java\
 	org/xapian/MatchSpy.java\
 	org/xapian/MSet.java\
-	org/xapian/MSetItem.java\
 	org/xapian/MSetIterator.java\
 	org/xapian/MultiValueKeyMaker.java\
 	org/xapian/NumberValueRangeProcessor.java\

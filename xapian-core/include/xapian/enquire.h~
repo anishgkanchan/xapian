@@ -160,7 +160,7 @@ class XAPIAN_VISIBILITY_DEFAULT MSet {
 	 *  display such information.  However, our experience is that
 	 *  presenting this value to users causes them to worry about the
 	 *  large number of results, rather than how useful those at the top
-	 *  of the result  are, and is thus undesirable.
+	 *  of the result set are, and is thus undesirable.
 	 */
 	Xapian::doccount get_matches_estimated() const;
 

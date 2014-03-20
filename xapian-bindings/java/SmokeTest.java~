@@ -45,13 +45,8 @@ class MyExpandDecider extends ExpandDecider {
 public class SmokeTest {
     public static void main(String[] args) throws Exception {
 	
-	//testing block starts
+	
 
-
-TermGenerator termGenerator = new TermGenerator();
-
-termGenerator.setFlags(TermGenerator.FLAG_SPELLING);
-	//testing block ends
 	try {
 
 	    Stem stem = new Stem("english");

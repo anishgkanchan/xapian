@@ -29,12 +29,14 @@ package org.xapian.examples;
 import org.xapian.Document;
 import org.xapian.WritableDatabase;
 import org.xapian.Xapian;
-
+import org.xapian.TermGenerator;
 public class SimpleIndex {
 
 
     public static void main(String[] args) throws Exception {
-        // ensure we have enough args
+        
+
+// ensure we have enough args
         if (args.length < 2) {
             usage();
             System.exit(0);
@@ -43,6 +45,14 @@ public class SimpleIndex {
         // create or *overwrite an existing* Xapian database
         String dbpath = args[0];
         WritableDatabase db = new WritableDatabase(dbpath, Xapian.DB_CREATE_OR_OVERWRITE);
+
+
+	//testing block starts
+
+//TermGenerator termGenerator = new TermGenerator();
+//termGenerator.setDatabase(db);
+//termGenerator.setFlags(TermGenerator.FLAG_SPELLING);
+	//testing block ends
 
         // walk through remaining command-line arguments and
         // add each argument as a single to term to a new document.

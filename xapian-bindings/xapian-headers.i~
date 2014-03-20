@@ -62,7 +62,7 @@
 #define INC_OR_DEC(METHOD, OP, NS, CLASS, RET_TYPE) NS::CLASS METHOD() { return OP(*self); }
 #elif defined SWIGJAVA
 /* In Java, next and prev return the result of dereferencing the iterator. */
-#define INC_OR_DEC(METHOD, OP, NS, CLASS, RET_TYPE)
+#define INC_OR_DEC(METHOD, OP, NS, CLASS, RET_TYPE)// RET_TYPE METHOD()
 #else
 /* Otherwise, next and prev return void. */
 #define INC_OR_DEC(METHOD, OP, NS, CLASS, RET_TYPE) void METHOD() { OP(*self); }

@@ -91,7 +91,7 @@ class XAPIAN_VISIBILITY_DEFAULT TermGenerator {
 	/// Index data required for spelling correction.
 	FLAG_SPELLING = 128 // Value matches QueryParser flag.
     };
-typedef int flags;
+
     /// Stemming strategies, for use with set_stemming_strategy().
     typedef enum { STEM_NONE, STEM_SOME, STEM_ALL, STEM_ALL_Z } stem_strategy;
 
